@@ -1,4 +1,4 @@
-# Crunchatize Me Cap'n!
+# Pierce the heavens with your spoon! :spoon:
 
 ![banner](imgs/banner.jpg)
 
