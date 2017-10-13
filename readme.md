@@ -1,4 +1,4 @@
-# Pierce the heavens with your spoon! :spoon:
+# Crunchatize
 
 ![banner](imgs/banner.jpg)
 
