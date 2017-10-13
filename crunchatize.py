@@ -85,7 +85,7 @@ def work(bot, seen, delay):
     """So me put in work, work, work, work, work, work!"""
     seen.update(latest_codes())
     print('Seen:', seen)
-    bot.send_msg('Y\'arr! Took me a quick nap, but I\'m bak to plunder!')
+    bot.send_msg('Y\'arr! Took me a quick nap, but I\'m bak to plunder! ☠️')
     while True:
         print('Polling...')
         new_codes = latest_codes().difference(seen)
