@@ -51,7 +51,7 @@ class TailSet:
 
 class GroupMeBot:
     """Allows sending crunchyroll passes via a GroupMe bot."""
-    API_URL = 'https://api.groupme.com/v3/bots/post'
+    POST_URL = 'https://api.groupme.com/v3/bots/post'
 
     def __init__(self, bot_id):
         """Creates a new wrapper for the GroupMe API."""
@@ -60,7 +60,7 @@ class GroupMeBot:
     def send_msg(self, msg):
         """Sends a plaintext message as-is."""
         payload = {'bot_id': self.bot_id, 'text': msg}
-        requests.post(GroupMeBot.API_URL, payload)
+        requests.post(GroupMeBot.POST_URL, payload)
 
     def send_code(self, code):
         """Formats the code as a pretty message and sends it."""
