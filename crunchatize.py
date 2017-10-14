@@ -63,10 +63,9 @@ class GroupMeBot:
         requests.post(GroupMeBot.POST_URL, payload)
 
     def send_code(self, code):
-        """Formats the code as a pretty message and sends it."""
+        """Formats the code as a link and sends it."""
         link = CRUNCHYROLL_URL + '/guest_pass?code=' + code
-        msg = '🎟 ' + link
-        self.send_msg(msg)
+        self.send_msg(link)
 
 
 def latest_codes():
