@@ -73,6 +73,7 @@ def latest_codes():
     """Return passes currently listed on the last page of the target thread."""
     latest = set()
     page = requests.get(CRUNCHYROLL_URL + '/forumtopic-803801?pg=last')
+    print('Response status:', page.status_code)
     soup = BeautifulSoup(page.content, 'html.parser')
     posts = soup.find_all('div', class_='showforumtopic-message-contents-text')
     for post in posts:
