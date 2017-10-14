@@ -1,6 +1,6 @@
 # Crunchatize
 
-![banner](imgs/banner.jpg)
+![banner](imgs/banner.jpg?raw=true)
 
 <sub>artist: [vashperado](https://vashperado.deviantart.com)</sup>
 
@@ -20,5 +20,5 @@ The following values are user-configurable:
 
 ## Screenshots
 
-<img src="imgs/screenshot_01.jpg" style="max-height: 50px; max-width: 50px;" />
-<img src="imgs/screenshot_02.jpg" style="max-height: 50px; max-width: 50px;" />
+![screenshot_01](imgs/screenshot_01.jpg?raw=true)
+![screenshot_02](imgs/screenshot_02.jpg?raw=true)
