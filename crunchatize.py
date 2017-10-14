@@ -9,6 +9,8 @@ from collections import deque
 
 
 CRUNCHYROLL_URL = 'http://www.crunchyroll.com'
+FORUMTOPIC_ID = '803801'
+CODES_PAGE_URL = '%s/forumtopic-%s?pg=last' % (CRUNCHYROLL_URL, FORUMTOPIC_ID)
 
 
 class TailSet:
@@ -72,7 +74,7 @@ class GroupMeBot:
 def latest_codes():
     """Return passes currently listed on the last page of the target thread."""
     latest = set()
-    page = requests.get(CRUNCHYROLL_URL + '/forumtopic-803801?pg=last')
+    page = requests.get(CODES_PAGE_URL)
     print('Response status:', page.status_code)
     soup = BeautifulSoup(page.content, 'html.parser')
     posts = soup.find_all('div', class_='showforumtopic-message-contents-text')
