@@ -20,5 +20,5 @@ The following values are user-configurable:
 
 ## Screenshots
 
-![screenshot_01](imgs/screenshot_01.jpg)
-![screenshot_02](imgs/screenshot_02.jpg)
+<img src="imgs/screenshot_01.jpg" style="max-height: 100px; max-width: 100px;" />
+<img src="imgs/screenshot_02.jpg" style="max-height: 100px; max-width: 100px;" />
