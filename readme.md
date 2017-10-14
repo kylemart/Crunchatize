@@ -17,3 +17,8 @@ The following values are user-configurable:
 * MAX_SEEN = The max number of 'seen' passes to cache in memory. The default value is 20.
 
 ( \* = required )
+
+## Screenshots
+
+![screenshot_01](imgs/screenshot_01.jpg)
+![screenshot_02](imgs/screenshot_02.jpg)
