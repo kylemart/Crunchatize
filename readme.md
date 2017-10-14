@@ -20,5 +20,5 @@ The following values are user-configurable:
 
 ## Screenshots
 
-![screenshot_01](imgs/screenshot_01.jpg?raw=true)
-![screenshot_02](imgs/screenshot_02.jpg?raw=true)
+![screenshot_01](imgs/screenshot_chat.jpg?raw=true)
+![screenshot_02](imgs/screenshot_sidebar.jpg?raw=true)
