@@ -20,5 +20,5 @@ The following values are user-configurable:
 
 ## Screenshots
 
-<img src="imgs/screenshot_01.jpg" style="max-height: 100px; max-width: 100px;" />
-<img src="imgs/screenshot_02.jpg" style="max-height: 100px; max-width: 100px;" />
+<img src="imgs/screenshot_01.jpg" style="max-height: 50px; max-width: 50px;" />
+<img src="imgs/screenshot_02.jpg" style="max-height: 50px; max-width: 50px;" />
