@@ -9,6 +9,11 @@
 Crunchatize plunders the interwebs in search of crunchyroll passes, then shares
 the "booty" amongst the poor (and the cheap) via GroupMe.
 
+## Screenshots
+
+![screenshot_01](imgs/screenshot_chat.jpg?raw=true)
+![screenshot_02](imgs/screenshot_sidebar.jpg?raw=true)
+
 ## Environment Variables
 
 The following values are user-configurable:
@@ -17,8 +22,3 @@ The following values are user-configurable:
 * MAX_SEEN = The max number of 'seen' passes to cache in memory. The default value is 20.
 
 ( \* = required )
-
-## Screenshots
-
-![screenshot_01](imgs/screenshot_chat.jpg?raw=true)
-![screenshot_02](imgs/screenshot_sidebar.jpg?raw=true)
