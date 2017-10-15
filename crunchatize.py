@@ -66,7 +66,7 @@ class GroupMeBot:
 
     def send_code(self, code):
         """Formats the code as a link and sends it."""
-        link = CRUNCHYROLL_URL + '/guest_pass?code=' + code
+        link = CRUNCHYROLL_URL + '/coupon_redeem?code=' + code
         msg = '🎟️ %s | %s' % (code, link)
         self.send_msg(msg)
 
