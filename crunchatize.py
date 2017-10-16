@@ -90,7 +90,7 @@ def work(bot, seen, delay):
     bot.send_msg('Y\'arr! Took me a quick nap, but I\'m bak to plunder! 🏴☠️')
     while True:
         print('Polling...')
-        new_codes = latest_codes().difference(seen)
+        new_codes = latest_codes() - seen
         print('New codes:', new_codes)
         for code in new_codes:
             print('Bot is sending %s...' % code)
