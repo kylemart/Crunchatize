@@ -106,13 +106,12 @@ def latest_codes(forumtopic):
 
 def main():
     """Execution entry point."""
-    # Load Configuration and Setup:
     bot = GroupMeBot(environ.get('BOT_ID'))
     seen = TailSet(int(environ.get('MAX_SEEN', '20')))
     delay = int(environ.get('POLL_DELAY_SECS', '60'))
     forumtopic = ForumTopic(environ.get('FORUMTOPIC_ID', '803801'))
-    # Begin Working:
-    print('Ignoring latest codes...')
+
+    print('Ignoring codes already posted...')
     seen.update(latest_codes(forumtopic))
     print('Seen:', seen)
     bot.send_msg('Y\'arr! Took me a quick nap, but I\'m bak to plunder! 🏴☠️')
