@@ -20,5 +20,6 @@ The following values are user-configurable:
 * BOT_ID = The ID of your GroupMe bot.\*
 * POLL_DELAY_SECS = The amount of time between polls. The default value is 60 seconds.
 * MAX_SEEN = The max number of 'seen' passes to cache in memory. The default value is 20.
+* FORUMTOPIC_ID = The id of the thread you wish to scrape from. The default value is 803801.
 
 ( \* = required )
