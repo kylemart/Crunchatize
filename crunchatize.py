@@ -9,8 +9,6 @@ from collections import deque
 
 
 CRUNCHYROLL_URL = 'http://www.crunchyroll.com'
-FORUMTOPIC_ID = '803801'
-CODES_PAGE_URL = '%s/forumtopic-%s?pg=last' % (CRUNCHYROLL_URL, FORUMTOPIC_ID)
 
 
 class TailSet:
@@ -70,27 +68,56 @@ class GroupMeBot:
         self.send_msg(link)
 
 
-def latest_codes():
-    """Return passes currently listed on the last page of the target thread."""
-    latest = set()
-    page = requests.get(CODES_PAGE_URL)
-    print('Response status:', page.status_code)
-    soup = BeautifulSoup(page.content, 'html.parser')
+class ForumTopic:
+    """Manages get requests to a crunchyroll forumtopic."""
+    def __init__(self, forumtopic_id):
+        """Constructs a new forumtopic."""
+        self.url = CRUNCHYROLL_URL + '/forumtopic-' + forumtopic_id
+
+    def get_last(self):
+        """Returns the last page of the forumtopic."""
+        return requests.get(self.url + '?pg=last')
+
+
+def find_all_post_text(html):
+    """Returns the bodies of all posts found on the page."""
+    soup = BeautifulSoup(html, 'html.parser')
     posts = soup.find_all('div', 'showforumtopic-message-contents-text')
-    for post in posts:
-        codes = re.findall('[0-9A-Z]{11}', post.text)
-        latest.update(codes)
-    return latest
+    return [post.text for post in posts]
 
 
-def work(bot, seen, delay):
-    """So me put in work, work, work, work, work, work!"""
-    seen.update(latest_codes())
+def find_codes(text):
+    """Returns a set of all codes found within a list of text."""
+    codes = set()
+    for item in text:
+        found = re.findall('[0-9A-Z]{11}', item)
+        codes.update(found)
+    return codes
+
+
+def latest_codes(forumtopic):
+    """Gets the last page of the forumtopic and extracts all codes from it."""
+    response = forumtopic.get_last()
+    print('Reponse status:', response.status_code)
+    text = find_all_post_text(response.content)
+    return find_codes(text)
+
+
+def main():
+    """Execution entry point."""
+    # Load Configuration and Setup:
+    bot = GroupMeBot(environ.get('BOT_ID'))
+    seen = TailSet(int(environ.get('MAX_SEEN', '20')))
+    delay = int(environ.get('POLL_DELAY_SECS', '60'))
+    forumtopic = ForumTopic('803801')
+    # Begin Working:
+    print('Ignoring latest codes...')
+    seen.update(latest_codes(forumtopic))
     print('Seen:', seen)
     bot.send_msg('Y\'arr! Took me a quick nap, but I\'m bak to plunder! 🏴☠️')
     while True:
         print('Polling...')
-        new_codes = latest_codes() - seen
+        new_codes = latest_codes(forumtopic).difference(seen)
         print('New codes:', new_codes)
         for code in new_codes:
             print('Bot is sending %s...' % code)
@@ -99,14 +126,6 @@ def work(bot, seen, delay):
         print('Seen:', seen)
         print('Sleeping for', delay, 'seconds...')
         time.sleep(delay)
-
-
-def main():
-    """Execution entry point."""
-    bot = GroupMeBot(environ.get('BOT_ID'))
-    seen = TailSet(int(environ.get('MAX_SEEN', '20')))
-    delay = int(environ.get('POLL_DELAY_SECS', '60'))
-    work(bot, seen, delay)
 
 
 if __name__ == '__main__':
