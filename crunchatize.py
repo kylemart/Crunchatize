@@ -12,29 +12,28 @@ CRUNCHYROLL_URL = 'http://www.crunchyroll.com'
 
 
 class TailSet:
-    """A specialized set that drops elements after exceeding a max length. The
-    oldest element will be the first to be dropped."""
+    """A set that removes old elements after exceeding a max length."""
     def __init__(self, maxlen):
         """Creates a new tailset with a specified max length."""
         self._q = deque(maxlen=maxlen)
         self._s = set()
 
     def __contains__(self, item):
-        """Returns True if the item is in the set."""
+        """Returns True if the item is in the tailset."""
         return item in self._s
 
     def __iter__(self):
-        """Provides a generator for the set."""
+        """Provides a generator for the tailset."""
         for item in self._q:
             yield item
 
     def __str__(self):
-        """Returns a deque representation of the set."""
+        """Returns a deque representation of the tailset."""
         return self._q.__str__()
 
     def add(self, item):
-        """Adds an item to the set. If the set is at max capacity remove the
-        oldest element out of the set, then add the item."""
+        """Adds an item to the tailset. If the tailset is at max capacity, an
+           old element will be removed."""
         if item in self._s:
             return
         if self._q.maxlen and len(self._q) == self._q.maxlen:
@@ -44,7 +43,7 @@ class TailSet:
         self._s.add(item)
 
     def update(self, items):
-        """Adds a collection of items to the set."""
+        """Adds a collection of items to the tailset."""
         for item in items:
             self.add(item)
 
@@ -63,25 +62,25 @@ class GroupMeBot:
         requests.post(GroupMeBot.POST_URL, payload)
 
     def send_code(self, code):
-        """Formats the code as a link and sends it."""
+        """Formats the code as a pretty message and sends it."""
         link = CRUNCHYROLL_URL + '/coupon_redeem?code=' + code
         msg = code + ' | ' + link
         self.send_msg(msg)
 
 
 class ForumTopic:
-    """Manages get requests to a crunchyroll forumtopic."""
+    """Handles page retrieval from a crunchyroll forum topic."""
     def __init__(self, forumtopic_id):
-        """Constructs a new forumtopic."""
+        """Constructs a new forumtopic with a given id."""
         self.url = CRUNCHYROLL_URL + '/forumtopic-' + forumtopic_id
 
     def get_last(self):
-        """Returns the last page of the forumtopic."""
-        return requests.get(self.url + '?pg=last')
+        """Retrieves the last page of the forum topic."""
+        return requests.get(self.url + '?pg=last').content
 
 
 def extract_post_text(html):
-    """Returns the bodies of all posts found on the page."""
+    """Returns the contents of each post contained within the html."""
     soup = BeautifulSoup(html, 'html.parser')
     posts = soup.find_all('div', 'showforumtopic-message-contents-text')
     return [post.text for post in posts]
@@ -97,10 +96,9 @@ def find_codes(text):
 
 
 def latest_codes(forumtopic):
-    """Gets the last page of the forumtopic and extracts all codes from it."""
-    response = forumtopic.get_last()
-    print('Reponse status:', response.status_code)
-    text = extract_post_text(response.content)
+    """Extracts a set of all codes posted to the forum topic's last page."""
+    page = forumtopic.get_last()
+    text = extract_post_text(page)
     return find_codes(text)
 
 
