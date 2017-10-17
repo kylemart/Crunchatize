@@ -80,7 +80,7 @@ class ForumTopic:
         return requests.get(self.url + '?pg=last')
 
 
-def find_all_post_text(html):
+def extract_post_text(html):
     """Returns the bodies of all posts found on the page."""
     soup = BeautifulSoup(html, 'html.parser')
     posts = soup.find_all('div', 'showforumtopic-message-contents-text')
@@ -100,7 +100,7 @@ def latest_codes(forumtopic):
     """Gets the last page of the forumtopic and extracts all codes from it."""
     response = forumtopic.get_last()
     print('Reponse status:', response.status_code)
-    text = find_all_post_text(response.content)
+    text = extract_post_text(response.content)
     return find_codes(text)
 
 
