@@ -76,7 +76,7 @@ def latest_codes():
     page = requests.get(CODES_PAGE_URL)
     print('Response status:', page.status_code)
     soup = BeautifulSoup(page.content, 'html.parser')
-    posts = soup.find_all('div', class_='showforumtopic-message-contents-text')
+    posts = soup.find_all('div', 'showforumtopic-message-contents-text')
     for post in posts:
         codes = re.findall('[0-9A-Z]{11}', post.text)
         latest.update(codes)
