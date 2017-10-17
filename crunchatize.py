@@ -110,7 +110,7 @@ def main():
     bot = GroupMeBot(environ.get('BOT_ID'))
     seen = TailSet(int(environ.get('MAX_SEEN', '20')))
     delay = int(environ.get('POLL_DELAY_SECS', '60'))
-    forumtopic = ForumTopic('803801')
+    forumtopic = ForumTopic(environ.get('FORUMTOPIC_ID', '803801'))
     # Begin Working:
     print('Ignoring latest codes...')
     seen.update(latest_codes(forumtopic))
