@@ -64,7 +64,6 @@ class GroupMeBot:
         except requests.exceptions.RequestException as e:
             print('Failed to post bot message!')
             print(e)
-            pass
 
 
 class ForumTopic:
