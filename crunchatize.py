@@ -56,8 +56,8 @@ class GroupMeBot:
         """Creates a new wrapper for the GroupMe API."""
         self.bot_id = bot_id
 
-    def send_msg(self, msg):
-        """Sends a plaintext message as-is."""
+    def post(self, msg):
+        """Posts a plaintext message as-is."""
         try:
             payload = {'bot_id': self.bot_id, 'text': msg}
             requests.post(GroupMeBot.POST_URL, payload)
@@ -121,7 +121,7 @@ def main():
     print('Ignoring codes already posted...')
     seen.update(latest_codes(forumtopic))
     print('Seen:', seen)
-    bot.send_msg('Y\'arr! I awaken from me slumber, now to plunder! 🏴☠️')
+    bot.post('Y\'arr! I awaken from me slumber, now to plunder! 🏴☠️')
     while True:
         print('Polling...')
         new_codes = latest_codes(forumtopic).difference(seen)
@@ -129,7 +129,7 @@ def main():
         for code in new_codes:
             print('Bot is sending %s...' % code)
             url = create_redeem_url(code)
-            bot.send_msg('Snag 🎟 \"%s\" @ %s' % (code, url))
+            bot.post('Snag 🎟 \"%s\" @ %s' % (code, url))
         seen.update(new_codes)
         print('Seen:', seen)
         print('Sleeping for', delay, 'seconds...')
