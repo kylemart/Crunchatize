@@ -101,7 +101,7 @@ def latest_codes(forumtopic):
         page = forumtopic.get_last()
         text = extract_post_text(page)
         return find_codes(text)
-    except requests.RequestError as e:
+    except requests.exceptions.RequestException as e:
         print(e)
         return set()
 
