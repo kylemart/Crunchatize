@@ -62,7 +62,7 @@ class GroupMeBot:
             payload = {'bot_id': self.bot_id, 'text': msg}
             requests.post(GroupMeBot.POST_URL, payload)
         except requests.exceptions.RequestException as e:
-            print('Failed to send bot message!')
+            print('Failed to post bot message!')
             print(e)
             pass
 
@@ -101,7 +101,7 @@ def latest_codes(forumtopic):
         text = extract_post_text(page)
         return find_codes(text)
     except requests.exceptions.RequestException as e:
-        print('Failed to get latest codes!')
+        print('Failed to get the forum topic page!')
         print(e)
         return set()
 
