@@ -97,13 +97,9 @@ def find_codes(text):
 
 def latest_codes(forumtopic):
     """Extracts a set of all codes posted to the forum topic's last page."""
-    try:
-        page = forumtopic.get_last()
-        text = extract_post_text(page)
-        return find_codes(text)
-    except requests.exceptions.RequestException as e:
-        print(e)
-        return set()
+    page = forumtopic.get_last()
+    text = extract_post_text(page)
+    return find_codes(text)
 
 
 def main():
