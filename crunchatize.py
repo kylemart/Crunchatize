@@ -49,7 +49,7 @@ class TailSet:
 
 
 class GroupMeBot:
-    """Allows sending crunchyroll passes via a GroupMe bot."""
+    """Allows sending messages via a GroupMe bot."""
     POST_URL = 'https://api.groupme.com/v3/bots/post'
 
     def __init__(self, bot_id):
@@ -61,11 +61,15 @@ class GroupMeBot:
         payload = {'bot_id': self.bot_id, 'text': msg}
         requests.post(GroupMeBot.POST_URL, payload)
 
-    def send_code(self, code):
-        """Formats the code as a pretty message and sends it."""
-        link = CRUNCHYROLL_URL + '/coupon_redeem?code=' + code
-        msg = code + ' | ' + link
-        self.send_msg(msg)
+
+def send_msg(bot, msg):
+    """Sends a bot message. Catches and logs raised exceptions."""
+    try:
+        bot.send_msg(msg)
+    except requests.exceptions.RequestException as e:
+        print('Failed to send bot message!')
+        print(e)
+        pass
 
 
 class ForumTopic:
@@ -97,9 +101,19 @@ def find_codes(text):
 
 def latest_codes(forumtopic):
     """Extracts a set of all codes posted to the forum topic's last page."""
-    page = forumtopic.get_last()
-    text = extract_post_text(page)
-    return find_codes(text)
+    try:
+        page = forumtopic.get_last()
+        text = extract_post_text(page)
+        return find_codes(text)
+    except requests.exceptions.RequestException as e:
+        print('Failed to get latest codes!')
+        print(e)
+        return set()
+
+
+def create_redeem_url(code):
+    """Creates a redemption url for a given code."""
+    return CRUNCHYROLL_URL + '/coupon_redeem?code=' + code
 
 
 def main():
@@ -112,14 +126,15 @@ def main():
     print('Ignoring codes already posted...')
     seen.update(latest_codes(forumtopic))
     print('Seen:', seen)
-    bot.send_msg('Y\'arr! Took me a quick nap, but I\'m bak to plunder! 🏴☠️')
+    send_msg(bot, 'Y\'arr! I awaken from me slumber, now to plunder! 🏴☠️')
     while True:
         print('Polling...')
         new_codes = latest_codes(forumtopic).difference(seen)
         print('New codes:', new_codes)
         for code in new_codes:
             print('Bot is sending %s...' % code)
-            bot.send_code(code)
+            url = create_redeem_url(code)
+            send_msg(bot, 'Snag 🎟 \"%s\" @ %s' % (code, url))
         seen.update(new_codes)
         print('Seen:', seen)
         print('Sleeping for', delay, 'seconds...')
